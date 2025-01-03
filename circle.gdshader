@@ -1,9 +1,11 @@
 shader_type canvas_item;
 
 float circle(vec2 position, float radius) {
-	return smoothstep(radius, radius, dot(position, position) * 4.0);
+	return smoothstep(-radius, -radius, -length(position - vec2(0.5)));
 }
 
 void fragment() {
-	COLOR.rgb = vec3(circle(UV, 1));
+	vec3 circleColor = vec3(circle(UV, 0.5)) * vec3(1, 1, 1 );
+	float circleAlpha = circleColor[0] + circleColor[1] + circleColor[2];
+	COLOR = vec4(circleColor, circleAlpha);
 }
